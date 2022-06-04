@@ -1,0 +1,7 @@
+﻿Hello world.
+My name is Olga. I'm 35 years old. I have a sun and a doughte.
+My sun plays hockey very well. I love my children.
+
+Привет Мир.
+Меня зовут Оля. Мне 35 лет. У меня есть сын и дочь. Мой сын играет в хоккей очень хорошо.
+Я люблю своих детей.

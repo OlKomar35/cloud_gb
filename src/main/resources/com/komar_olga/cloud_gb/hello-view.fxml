@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.komar_olga.cloud_gb.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <HBox fx:id="cloudBox" prefHeight="600.0" prefWidth="800.0">
+            <children>
+                <VBox fx:id="clientBox" prefHeight="560.0" prefWidth="300.0">
+                    <children>
+                        <HBox prefHeight="20.0" prefWidth="287.0">
+                            <children>
+                                <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@folder.png" />
+                                    </image>
+                                </ImageView>
+                                <Label text="Client" textFill="#900f0f" underline="true">
+                                    <font>
+                                        <Font name="Cambria Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <TableView fx:id="filesListClient" prefHeight="500.0" prefWidth="287.0">
+                            <columns>
+                                <TableColumn fx:id="filesNameClient" prefWidth="147.0" text="name" />
+                                <TableColumn fx:id="filesTypeClient" prefWidth="44.0" text="type" />
+                                <TableColumn fx:id="filesSizeClient" prefWidth="95.0" text="size" />
+                            </columns>
+                        </TableView>
+                        <TextField fx:id="addressBarClient" prefHeight="36.0" prefWidth="287.0" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="560.0" prefWidth="200.0">
+                    <children>
+                        <Pane prefHeight="560.0" prefWidth="200.0">
+                            <children>
+                                <RadioButton fx:id="downloadRadio" layoutX="50.0" layoutY="223.0" mnemonicParsing="false" selected="true" text="Download" onAction="#onClickRadioButton">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="group"/>
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Cambria Bold" size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="uploadRadio" layoutX="50.0" layoutY="253.0" mnemonicParsing="false" text="Upload" onAction="#onClickRadioButton">
+                                    <toggleGroup>
+                                        <fx:reference source="group"/>
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Cambria Bold" size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="renameRadio" layoutX="50.0" layoutY="313.0" mnemonicParsing="false" text="Rename" onAction="#onClickRadioButton">
+                                    <toggleGroup>
+                                        <fx:reference source="group"/>
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Cambria Bold" size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="deleteRadio" layoutX="50.0" layoutY="283.0" mnemonicParsing="false" text="Delete" onAction="#onClickRadioButton">
+                                    <toggleGroup>
+                                        <fx:reference source="group"/>
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Cambria Bold" size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <Label fx:id="textSelectedRadio" layoutX="6.0" layoutY="30.0" prefHeight="18.0" prefWidth="179.0" text="Cкачать файл из облака?" underline="true" wrapText="true">
+                                    <font>
+                                        <Font name="Cambria Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="buttonRadio" layoutX="26.0" layoutY="475.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="136.0" text="Download" onAction="#onClickButton">
+                                    <font>
+                                        <Font name="Cambria Bold" size="16.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+                <VBox fx:id="serverBox" prefHeight="560.0" prefWidth="300.0">
+                    <children>
+                        <HBox prefHeight="20.0" prefWidth="287.0">
+                            <children>
+                                <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@folder.png" />
+                                    </image>
+                                </ImageView>
+                                <Label text="Server" textFill="#900f0f" underline="true">
+                                    <font>
+                                        <Font name="Cambria Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <TableView fx:id="filesListServer" prefHeight="500.0" prefWidth="287.0">
+                            <columns>
+                                <TableColumn fx:id="filesNameServer" prefWidth="147.0" text="name" />
+                                <TableColumn fx:id="filesTypeServer" prefWidth="44.0" text="type" />
+                                <TableColumn fx:id="filesSizeServer" prefWidth="95.0" text="size" />
+                            </columns>
+                        </TableView>
+                        <TextField fx:id="addressBarServer" prefHeight="36.0" prefWidth="287.0" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>
