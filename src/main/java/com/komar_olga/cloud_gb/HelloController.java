@@ -325,6 +325,7 @@ public class HelloController implements Initializable {
                 addressBarClient.clear();
             } else {
                 try {
+                    //todo не верно переименовывыает
                     Network.sendMsg(new FileRequest(addressBarServer.getText(), "rename_first"));
                     String address = filesListServer.getSelectionModel().getSelectedItem().getName() + "."
                             + filesListServer.getSelectionModel().getSelectedItem().getType();
