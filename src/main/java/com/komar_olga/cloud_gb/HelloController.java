@@ -124,7 +124,7 @@ public class HelloController implements Initializable {
             AbstractMessage am = Network.readObject();
             if (am instanceof FileList) {
                 FileList fl = (FileList) am;
-                //System.out.println(fl.getFileName().size());
+
                 for (int i = 0; i < fl.getFileName().size(); i++) {
 //                        System.out.print(fl.getFileName().get(i));
 //                        System.out.print("." + fl.getFileType().get(i));
