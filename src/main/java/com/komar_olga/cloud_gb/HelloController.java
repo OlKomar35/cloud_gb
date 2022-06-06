@@ -119,26 +119,19 @@ public class HelloController implements Initializable {
     }
 
     private void refreshServerData() {
-        Thread t = new Thread(() -> {
+        Network.sendMsg(new FileRequest(null, "list"));
         try {
             AbstractMessage am = Network.readObject();
             if (am instanceof FileList) {
                 FileList fl = (FileList) am;
-                //System.out.println(fl.getFileName().size());
+
                 for (int i = 0; i < fl.getFileName().size(); i++) {
-//                        System.out.print(fl.getFileName().get(i));
-//                        System.out.print("." + fl.getFileType().get(i));
-//                        System.out.println(" [" + fl.getFileSize().get(i) + "]");
                     serverData.add(new FileData(fl.getFileName().get(i), fl.getFileType().get(i), fl.getFileSize().get(i) + " Byte"));
                 }
             }
         }catch (ClassNotFoundException|IOException e){
             e.printStackTrace();
-        }});
-        t.setDaemon(true);
-        t.start();
-
-        Network.sendMsg(new FileRequest(null, "list"));
+     }
 
         filesNameServer.setCellValueFactory(new PropertyValueFactory<FileData, String>("name"));
         filesTypeServer.setCellValueFactory(new PropertyValueFactory<FileData, String>("type"));
@@ -151,9 +144,6 @@ public class HelloController implements Initializable {
     private void refreshClientData() throws IOException {
         FileList fl = new FileList("client_storage/");
         for (int i = 0; i < fl.getFileName().size(); i++) {
-//            System.out.print(fl.getFileName().get(i));
-//            System.out.print("." + fl.getFileType().get(i));
-//            System.out.println(" [" + fl.getFileSize().get(i) + "]");
             clientData.add(new FileData(fl.getFileName().get(i), fl.getFileType().get(i), fl.getFileSize().get(i) + " Byte"));
         }
         filesNameClient.setCellValueFactory(new PropertyValueFactory<FileData, String>("name"));
@@ -311,7 +301,6 @@ public class HelloController implements Initializable {
                     String address = filesListClient.getSelectionModel().getSelectedItem().getName() + "."
                             + filesListClient.getSelectionModel().getSelectedItem().getType();
                     Path sourcePath = Paths.get("client_storage/" + address);
-                    //todo смущает эта конструкция !!!
                     Path destinationPath = Paths.get("client_storage/" + addressBarClient.getText());
                     System.out.println(sourcePath.getFileName() + "->" + destinationPath.getFileName());
                     Files.move(sourcePath, destinationPath);
@@ -324,19 +313,26 @@ public class HelloController implements Initializable {
                 }
                 addressBarClient.clear();
             } else {
+                //todo не верно переименовывыает
+                String address = filesListServer.getSelectionModel().getSelectedItem().getName() + "."
+                        + filesListServer.getSelectionModel().getSelectedItem().getType();
+                Network.sendMsg(new FileRequest(address, "rename_second"));
                 try {
-                    Network.sendMsg(new FileRequest(addressBarServer.getText(), "rename_first"));
-                    String address = filesListServer.getSelectionModel().getSelectedItem().getName() + "."
-                            + filesListServer.getSelectionModel().getSelectedItem().getType();
-                    Network.sendMsg(new FileRequest(address, "rename_second"));
-                    filesListServer.getItems().clear();
-                    refreshClientData();
-                } catch (IOException e) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Не верное действие");
-                    alert.showAndWait();
-                    addressBarClient.clear();
+                    AbstractMessage am = Network.readObject();
+                    if (am instanceof FileRequest) {
+                        FileRequest fr = (FileRequest) am;
+                        if (fr.getActionPoint().equals("rename")) {
+                            Network.sendMsg(new FileRequest(addressBarServer.getText(), "rename_first"));
+                            addressBarServer.clear();
+                        }
+                    }
+                } catch (ClassNotFoundException |IOException e) {
+                    e.printStackTrace();
                 }
-                addressBarServer.clear();
+
+                filesListServer.getItems().clear();
+                refreshServerData();
+                //addressBarServer.clear();
             }
 
         }
